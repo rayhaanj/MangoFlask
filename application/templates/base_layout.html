@@ -1,0 +1,26 @@
+{% extends "bootstrap/base.html" %}
+{% block head %}
+{{super()}}
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,300,600,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/rayhaan_net.css') }}">
+{% endblock %}
+
+{% block title %}Welcome to rayhaan.net{% endblock %}
+
+{% block content %}
+
+<div class="blog-masthead">
+    <div class="container">
+        {% include "menu.html" %}
+    </div>
+</div>
+
+<div class="banner">
+    <div class="container">
+        {% block banner %}{% endblock %}
+    </div>
+</div>
+
+{% block pagecontent %}
+{% endblock %}
+{% endblock %}

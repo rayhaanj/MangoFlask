@@ -1,0 +1,16 @@
+{% set navbar = [
+    ('/', 'home', 'Home'),
+    ('/blog', 'blog', 'Blog'),
+    ('/contact', 'contact', 'Contact'),
+    ('https://github.com/rayhaanj', 'github', 'github')
+] -%}
+
+<nav class="blog-nav">
+    {% for href, id, caption in navbar %}
+        <a class="blog-nav-item{% if id == active %} active{% endif %}" href="{{href}}">{{caption}}</a>
+    {% endfor %}
+</nav>
+
+<nav class="blog-nav pull-right">
+    <a class="blog-nav-item" href="/login">Login</a>
+</nav>

@@ -1,0 +1,17 @@
+{% extends "base_layout.html" %}
+
+{% block banner %}
+<h1>rayhaan.net &#187; Administrative control center</h1>
+{% endblock %}
+
+{% block pagecontent %}
+<div class="container">
+    <form action="/login" method="POST" class="loginform">
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username"/>
+        <label for="password" class="sr-only">Username</label>
+        <input type="password" class="form-control" id="password" name="username" placeholder="Password"/>
+    </form>
+</div>
+
+{% endblock %}
