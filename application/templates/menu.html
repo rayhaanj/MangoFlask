@@ -2,7 +2,7 @@
     ('/', 'home', 'Home'),
     ('/blog', 'blog', 'Blog'),
     ('/contact', 'contact', 'Contact'),
-    ('https://github.com/rayhaanj', 'github', 'github')
+    ('https://github.com/rayhaanj', 'github', 'GitHub')
 ] -%}
 
 <nav class="blog-nav">
@@ -12,5 +12,9 @@
 </nav>
 
 <nav class="blog-nav pull-right">
-    <a class="blog-nav-item" href="/login">Login</a>
+    {% if session.get('username') %}
+        <a class="blog-nav-item" href="/logout">Logged in as: {{ session.get('username') }}</a>
+    {% else %}
+        <a class="blog-nav-item" href="/login">Login</a>
+    {% endif -%}
 </nav>

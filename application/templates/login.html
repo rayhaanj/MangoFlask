@@ -7,10 +7,14 @@
 {% block pagecontent %}
 <div class="container">
     <form action="/login" method="POST" class="loginform">
+        {% if request.args.get('error') %}
+            <div style="padding-top: 25px; padding-bottom: 25px;"><span class="alert alert-warning">Invalid credentials.</span></div>
+        {% endif -%}
         <label for="username" class="sr-only">Username</label>
         <input type="text" class="form-control" id="username" name="username" placeholder="Username"/>
         <label for="password" class="sr-only">Username</label>
-        <input type="password" class="form-control" id="password" name="username" placeholder="Password"/>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>
+        <button action="submit" style="width: 100%;" class="btn btn-primary">Login</button>
     </form>
 </div>
 

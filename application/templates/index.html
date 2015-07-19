@@ -4,19 +4,35 @@
 {% endblock %}
 
 {% block pagecontent %}
+<div class="banner-blue">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <img class="img-responsive img-rounded" src="{{ url_for('static', filename='img/profile.jpg') }}" alt="Profile picture">
+            </div>
+
+            <div class="col-sm-9">
+                <p>Welcome to my website. This is a place where I will post my ideas and thoughts on
+                    things related to technology, as well as to serve as a portfolio of the projects
+                    that I have undertaken.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <h2 class="underline-green">Recent blogposts.</h2>
     {% for post in blog_posts %}
     <div class="blog-post">
         <div class="row">
-            <div class="col-md-8"><h3>{{post.title}}</h3></div>
+            <div class="col-md-8"><h3>{{post.title|safe}}</h3></div>
             <div class="col-md-4"><i class="date">{{post.date_published}}</i></div>
         </div>
         <div class="post-wrap">
-        {{post.content}}
-        </div>
+            {{markdownify(post.content)}}
         </div>
     </div>
-    {% endfor %}
+</div>
+{% endfor %}
 </div>
 {% endblock %}

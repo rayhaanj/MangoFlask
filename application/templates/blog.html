@@ -1,6 +1,6 @@
 {% extends "base_layout.html" %}
 {% block banner %}
-<h1>&#187;Welcome to rayhaan.net.</h1>
+<h1>Rayhaan.net &#187; Blog</h1>
 {% endblock %}
 
 {% block pagecontent %}
@@ -9,11 +9,11 @@
     {% for post in blog_posts %}
     <div class="blog-post">
         <div class="row">
-            <div class="col-md-8"><h3>{{post.title}}</h3></div>
+            <div class="col-md-8"><h3>{{post.title|safe}}</h3></div>
             <div class="col-md-4"><i class="date">{{post.date_published}}</i></div>
         </div>
         <div class="post-wrap">
-        {{post.content}}
+            {{ markdownify(post.content) }}
         </div>
         </div>
     </div>

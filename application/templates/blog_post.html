@@ -8,7 +8,7 @@
 <div class="container" style="padding-top: 25px;">
     <div class="blog-post">
         <div class="row">
-            <div class="col-md-8"><h2>{{post.title}}</h2></div>
+            <div class="col-md-8"><h2>{{post.title|safe}}</h2></div>
             <div class="col-md-4"><i class="date">{{post.date_published}}</i></div>
         </div>
         <div class="post-wrap">

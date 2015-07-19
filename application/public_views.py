@@ -22,4 +22,4 @@ def view_blogpost(id):
 
 @app.route('/contact')
 def contact():
-    return render_template('contact.html')
+    return render_template('contact.html', active='contact')

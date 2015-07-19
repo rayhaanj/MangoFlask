@@ -1,12 +1,65 @@
 {% extends "base_layout.html" %}
 {% block banner %}
-<h1>rayhaan.net &#187+oContact</h1>
+<h1>rayhaan.net &#187; Contact</h1>
 {% endblock %}
 
 {% block pagecontent %}
 <div class="container">
+    <h3>Electronic mail</h3>
+    <p>If you would like to send me mail, please use the address: web <code>U+0040</code> rayhaan <code>U+002E</code> net</p>
     <h3>PGP Key</h3>
-    <i>If you would like to send me encrypted communications, my PGP key is available below, or look for the newest
-    entry in <a href="https://pgp.mit.edu/pks/lookup?search=Rayhaan+Jaufeerally&op=index">pgp.mit.edu</a>.</i>
+    <p>If you would like to send me encrypted communications, my PGP key is available <a onclick="$('#pgp').show()">Here</a>, or look for the newest
+    entry in <a href="https://pgp.mit.edu/pks/lookup?search=Rayhaan+Jaufeerally&op=index">pgp.mit.edu</a>.</p>
+    <pre id="pgp" style="display: none;">
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+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
+=7Mp8
+-----END PGP PUBLIC KEY BLOCK-----
+    </pre>
 </div>
 {% endblock %}

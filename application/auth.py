@@ -15,9 +15,8 @@ def logged_in(func):
         if session.get('logged_in') is not None:
             # User is logged in
             return func(*args, **kwargs)
-        return Response(jsonify(dict(error='You are not logged in!')), 403)
+        return Response(jsonify(dict(error='You are not logged in!')), 403, mimetype="application/json")
     return decorated_function
-
 
 @app.route('/login', methods=['GET'])
 def login_get():
@@ -29,14 +28,14 @@ def login_post():
     password = request.form['password']
     user = db_session.query(models.User).filter_by(username=username).first()
     if user is None:
-        return redirect(url_for('login', _method=['GET']))
+        return redirect(url_for('login_get', error=True))
     if user.check_password(password):
         # User has successfully authenticated.
         session['logged_in'] = 1
         session['username'] = username
         session['user_id'] = user.id
-        return redirect(url_for('home'))
-    return redirect(url_for('login', _method=['GET']))
+        return redirect(url_for('admin.home'))
+    return redirect(url_for('login_get', error=True))
 
 @app.route('/logout')
 def logout():

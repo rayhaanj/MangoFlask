@@ -1,0 +1,78 @@
+{% extends "base_layout.html" %}
+
+{% block banner %}
+<h1>rayhaan.net &#187; Administrative control center</h1>
+{% endblock %}
+
+{% block pagecontent %}
+<script type="text/template" id="blogPostContainerTemplate">
+    <div class="container" id="blogPostContainer">
+        <table class="table">
+            <caption>Latest blog posts</caption>
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+                <td>Date published</td>
+                <td>Actions</td>
+            </tr>
+            </thead>
+            <tbody id="blogPostList">
+            </tbody>
+        </table>
+    </div>
+</script>
+
+<script type="text/template" id="blogOverviewTemplate">
+    <td><%=id%></td>
+    <td><%=title%></td>
+    <td><%=date_published%></td>
+    <td><a class="btn btn-primary edit">Edit</a>&nbsp;<a class="btn btn-danger delete">Delete</a></td>
+</script>
+
+<script type="text/template" id="blogEditViewTemplate">
+    <div class="row">
+        <div class="col-sm-3 pull-right">
+            <a class="save btn btn-success">Save</a>
+        </div>
+    </div>
+    <div id="blogEdit">
+        <input type="text" class="form-control input-lg" id="postTitle" value="<%=title%>"/>
+        <br>
+        Draft: <input type="checkbox" id="draft" <% if (draft) { %> checked <% } %> />
+        <br>
+        <textarea style="width: 75%;" id="postContent"><%=content%></textarea>
+    </div>
+</script>
+
+<div class="row">
+    <div class="col-sm-2">
+        <div class="sidebar-nav">
+            <div class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target=".sidebar-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <span class="visible-xs navbar-brand">Sidebar menu</span>
+                </div>
+                <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Blog editor</a></li>
+                        <li><a href="#">User manager</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-10">
+        <div id="adminContainer">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -40,6 +40,7 @@ app.json_encoder = SqlJsonEncoder
 
 class User(Base):
     __tablename__ = 'user'
+    __json_fields__ = ['username', 'display_name']
 
     id = Column(Integer, primary_key=True, index=True)
 
