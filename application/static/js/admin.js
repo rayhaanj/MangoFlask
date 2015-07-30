@@ -57,6 +57,7 @@ app.BlogListViewItem = Backbone.View.extend({
     },
 
     render: function() {
+        this.$el.clear();
         this.$el.html(this.template(this.model.toJSON()));
         return this;
     },
@@ -128,6 +129,7 @@ app.BlogListView = Backbone.View.extend({
         app.blogList.each(this.addOne, this);
     },
     render: function() {
+        this.$el.empty();
         this.$el.html($("#blogPostContainerTemplate").html());
         return this;
     }
