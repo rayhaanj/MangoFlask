@@ -20,7 +20,7 @@ app.config.from_object('application.config')
 # Set default pool recycle time or configured value.
 pool_recycle = app.config['DB_RECYCLE'] if 'DB_RECYCLE' in app.config else 3600
 
-engine = create_engine(app.config['DB_URL'])
+engine = create_engine(app.config['DB_URL'], pool_recycle=pool_recycle)
 db_session = Session(bind=engine)
 Base = declarative_base()
 
