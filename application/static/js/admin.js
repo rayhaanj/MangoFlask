@@ -128,6 +128,7 @@ app.BlogListView = Backbone.View.extend({
         app.blogList.each(this.addOne, this);
     },
     render: function() {
+        this.$el.empty();
         this.$el.html($("#blogPostContainerTemplate").html());
         return this;
     }
