@@ -7,14 +7,21 @@
 
 <nav class="blog-nav">
     {% for href, id, caption in navbar %}
-        <a class="blog-nav-item{% if id == active %} active{% endif %}" href="{{href}}">{{caption}}</a>
+    <a class="blog-nav-item{% if id == active %} active{% endif %}" href="{{href}}">{{caption}}</a>
     {% endfor %}
+    <span class="dropdown">
+        <a href="#" class="blog-nav-item dropdown-toggle" data-toggle="dropdown" role="button"
+           aria-haspopup="true" aria-expanded="false">Feeds <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="/blog.atom">Blog posts (Atom)</a></li>
+        </ul>
+    </span>
 </nav>
 
 <nav class="blog-nav pull-right">
     {% if session.get('username') %}
-        <a class="blog-nav-item" href="/logout">Logged in as: {{ session.get('username') }}</a>
+    <a class="blog-nav-item" href="/logout">Logged in as: {{ session.get('username') }}</a>
     {% else %}
-        <a class="blog-nav-item" href="/login">Login</a>
+    <a class="blog-nav-item" href="/login">Login</a>
     {% endif -%}
 </nav>

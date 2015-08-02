@@ -20,6 +20,7 @@ from application.public_views import *
 from application.auth import *
 from application.API import api_module
 from application.admin_views import admin_module
+from application.atom import blog_atom_feed
 
 app.register_blueprint(api_module, url_prefix='/api')
 app.register_blueprint(admin_module, url_prefix='/admin')
