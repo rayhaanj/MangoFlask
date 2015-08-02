@@ -39,7 +39,11 @@ app.register_blueprint(admin_module, url_prefix='/admin')
 def markdownify(text):
     return Markup(markdown.markdown(text))
 
+def get_GAID():
+    return app.config['GAID']
+
 app.jinja_env.globals.update(markdownify=markdownify)
+app.jinja_env.globals.update(get_GAID=get_GAID)
 
 if __name__ == '__main__':
     app.run('0.0.0.0', debug=True)
