@@ -80,7 +80,7 @@ app.BlogDetailView = Backbone.View.extend({
 
     save: function() {
         this.model.set({title: this.$("#postTitle").val(),
-            content: this.$("#postContent").val(),
+            content: this.simpleMde.value(),
             draft: this.$("#draft")[0].checked });
         this.model.save();
     },
@@ -103,6 +103,9 @@ app.BlogDetailView = Backbone.View.extend({
         var draft = this.model.draft ? "checked" : "";
         var tmpl_data = _.extend(this.model.toJSON(), draft);
         this.$el.html(this.template(tmpl_data));
+        // Initialize the markdown editor.
+        this.simpleMde = new SimpleMDE( { element: $("#postContent")[0] });
+        this.simpleMde.render();
         return this;
     }
 });

@@ -4,6 +4,13 @@
 <h1>rayhaan.net &#187; Administrative control center</h1>
 {% endblock %}
 
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="//cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+{% endblock %}
+
 {% block pagecontent %}
 <script type="text/template" id="blogPostContainerTemplate">
     <div class="container" id="blogPostContainer">
