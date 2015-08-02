@@ -4,8 +4,7 @@ from datetime import datetime
 
 from flask import Blueprint, jsonify, Response, request, session
 
-from application import db_session
-from application import models
+from application import models, db
 from application.auth import logged_in
 
 API_VERSION = 0.1
@@ -19,13 +18,13 @@ def home():
 # Retrieve a listing of blog posts.
 @api_module.route('/blog', methods=['GET'])
 def blog_home():
-    blog_posts = db_session.query(models.BlogPost).all()
+    blog_posts = models.BlogPost.query.all()
     return jsonify(dict(data=blog_posts))
 
 # Retrieve a particular blog post
 @api_module.route('/blog/<int:id>', methods=['GET'])
 def get_blog_post(id):
-    blog_post = db_session.query(models.BlogPost).filter_by(id=id).first()
+    blog_post = models.BlogPost.query.filter_by(id=id).first()
     if blog_post is None:
         return Response(jsonify(dict(error='Blog post not found!')), 404)
     return jsonify(dict(data=blog_post))
@@ -42,15 +41,16 @@ def new_blogpost():
     date_published = datetime.now()
     content = request.form['content']
 
-    blog_post = models.BlogPost(title, author_id, draft, date_published=date_published, content=content)
+    blog_post = models.BlogPost(title, author_id, draft, date_published=date_published,
+                                content=content)
 
-    db_session.add(blog_post)
-    db_session.commit()
+    db.session.add(blog_post)
+    db.session.commit()
 
 # Update an existing blog post
 @api_module.route('/blog/<int:id>', methods=['PUT'])
 def update_blogpost(id):
-    post = db_session.query(models.BlogPost).filter_by(id=id).first()
+    post = models.BlogPost.query.filter_by(id=id).first()
     print("Start")
     if post is None:
         return Response(jsonify(dict(error='Blog post not found!')), 404)
@@ -64,14 +64,14 @@ def update_blogpost(id):
     post.date_published = date_published
     post.content = content
 
-    db_session.commit()
+    db.session.commit()
     return jsonify(dict(data=post))
 
 @api_module.route('/blog/<int:id>', methods=['DELETE'])
 def delete_blog(id):
-    post = db_session.query(models.BlogPost).filter_by(id=id).first()
+    post = models.BlogPost.query.filter_by(id=id).first()
     if post is None:
         return Response(jsonify(dict(error='Blog post not found!')), 404)
     post.deleted = True
-    db_session.commit()
+    db.session.commit()
     return jsonify(dict(post=post))

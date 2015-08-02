@@ -2,7 +2,7 @@ __author__ = 'rayhaan'
 
 from flask import session, jsonify, Response, request, redirect, render_template, url_for
 from functools import wraps
-from application import app,db_session
+from application import app
 from application import models
 
 def logged_in(func):
@@ -26,7 +26,7 @@ def login_get():
 def login_post():
     username = request.form['username']
     password = request.form['password']
-    user = db_session.query(models.User).filter_by(username=username).first()
+    user = models.User.query.filter_by(username=username).first()
     if user is None:
         return redirect(url_for('login_get', error=True))
     if user.check_password(password):

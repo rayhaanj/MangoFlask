@@ -2,18 +2,16 @@ __author__ = 'rayhaan'
 
 from datetime import datetime
 
-from sqlalchemy import Boolean, Column, String, Text, Integer, DateTime, ForeignKey
-from sqlalchemy.orm import relationship, backref
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.json import JSONEncoder
 
-from application import app, Base
+from application import app, db
 
 class SqlJsonEncoder(JSONEncoder):
-    """Converts a SQLAlchemy mapped type to a json serialisable dict."""
+    """Converts a SQLAlchemy mapped type to a json serializable dict."""
     def default(self, obj):
         try:
-            if isinstance(obj, Base):  # Is another db object
+            if isinstance(obj, db.Model):  # Is another db object
                 visited = []
                 if obj in visited:
                     return None
@@ -23,6 +21,7 @@ class SqlJsonEncoder(JSONEncoder):
                 if '__json_fields__' in dir(obj):
                     fields = obj.__getattribute__('__json_fields__')
                 else:
+                    # TODO: After changing to flask-sqlalchemy this has changed and is broken.
                     fields = [x for x in dir(obj) if not x.startswith('_')
                               and x != 'metadata']
                 for field in fields:
@@ -38,17 +37,16 @@ class SqlJsonEncoder(JSONEncoder):
 # Set the JSON encoder to the one defined above.
 app.json_encoder = SqlJsonEncoder
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'user'
     __json_fields__ = ['username', 'display_name']
+    id = db.Column(db.Integer, primary_key=True, index=True)
 
-    id = Column(Integer, primary_key=True, index=True)
+    username = db.Column(db.String(128), unique=True, index=True)
+    password = db.Column(db.String(256))
+    email_address = db.Column(db.String(256))
 
-    username = Column(String(128), unique=True, index=True)
-    password = Column(String(256))
-    email_address = Column(String(256))
-
-    display_name = Column(String(128), unique=True)
+    display_name = db.Column(db.String(128), unique=True)
 
     # blog_posts backref from BlogPost.
 
@@ -58,25 +56,27 @@ class User(Base):
     def check_password(self, attempt):
         return check_password_hash(self.password, attempt)
 
-class BlogPost(Base):
+class BlogPost(db.Model):
     '''A blog post to display on the website.'''
     __tablename__ = 'blog_post'
+    __json_fields__ = ['id', 'title', 'draft', 'deleted', 'author_id', 'date_published', 'content',
+                       'author']
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(1024))
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    title = db.Column(db.String(1024))
 
-    draft = Column(Boolean)
-    deleted = Column(Boolean)
+    draft = db.Column(db.Boolean)
+    deleted = db.Column(db.Boolean)
 
-    author_id = Column(Integer, ForeignKey('user.id'))
-    author = relationship('User', backref='blog_posts')
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    author = db.relationship('User', backref='blog_posts')
 
-    date_created = Column(DateTime)
-    latest_revision_date = Column(DateTime)
+    date_created = db.Column(db.DateTime)
+    latest_revision_date = db.Column(db.DateTime)
     # The datetime to display publicly.
-    date_published = Column(DateTime)
+    date_published = db.Column(db.DateTime)
 
-    content = Column(Text)
+    content = db.Column(db.Text)
 
     def __repr__(self):
         return '<BlogPost title=' + str(self.title) + ', author_id = ' + str(self.author_id) + '>'

@@ -2,14 +2,11 @@ from flask import Flask
 from flask import Markup
 import markdown
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
-from sqlalchemy.ext.declarative import declarative_base
+from flask.ext.sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 
 import random
 import string
-
 
 app = Flask(__name__)
 app.secret_key = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(32))
@@ -17,16 +14,7 @@ Bootstrap(app)
 
 app.config.from_object('application.config')
 
-# Set default pool recycle time or configured value.
-pool_recycle = app.config['DB_RECYCLE'] if 'DB_RECYCLE' in app.config else 3600
-
-engine = create_engine(app.config['DB_URL'], pool_recycle=pool_recycle)
-db_session = Session(bind=engine)
-Base = declarative_base()
-
-def create_tables():
-    from application import models
-    Base.metadata.create_all(bind=engine)
+db = SQLAlchemy(app)
 
 from application.public_views import *
 from application.auth import *
