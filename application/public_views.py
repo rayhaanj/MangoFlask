@@ -5,12 +5,18 @@ from application import app, db, models
 
 @app.route('/')
 def home():
-    blog_posts = models.BlogPost.query.filter_by(draft=False).limit(5)
+    blog_posts = models.BlogPost.query\
+        .order_by(models.BlogPost.latest_revision_date.desc())\
+        .filter_by(draft=False)\
+        .limit(5)
     return render_template('index.html', blog_posts=blog_posts, active='home')
 
 @app.route('/blog')
 def blog():
-    blog_posts = models.BlogPost.query.filter_by(draft=False).limit(10)
+    blog_posts = models.BlogPost.query\
+        .order_by(models.BlogPost.latest_revision_date.desc())\
+        .filter_by(draft=False)\
+        .limit(10)
     return render_template('blog.html', blog_posts=blog_posts, active='blog')
 
 @app.route('/blog/<int:id>')
