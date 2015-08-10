@@ -15,4 +15,4 @@ def blog_atom_feed():
         feed.add(post.title, markdown.markdown(post.content),
                  content_type="html", author=post.author.display_name,
                  url="https://rayhaan.net/blog/" + str(post.id), updated=post.date_published)
-        return feed.get_response()
+    return feed.get_response()
