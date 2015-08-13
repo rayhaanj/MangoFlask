@@ -75,3 +75,17 @@ def delete_blog(id):
     post.deleted = True
     db.session.commit()
     return jsonify(dict(post=post))
+
+@api_module.route('/emotions/')
+def get_emotions():
+    emotion_log = models.EmoTrack.query.all()
+    return jsonify(dict(data=emotion_log))
+
+@api_module.route('/emotions/')
+@logged_in
+def new_emotion():
+    happiness = request.form['happiness']
+    comment = request.form['comment']
+    emotion = models.EmoTrack(happiness, comment=comment)
+    db.session.add(emotion)
+    db.session.commit()

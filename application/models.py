@@ -91,3 +91,21 @@ class BlogPost(db.Model):
         self.latest_revision_date = latest_revision_date
         self.date_published = date_published
         self.content = content
+
+class EmoTrack(db.model):
+    """Table for storing historical log of emotions"""
+    __tablename__ = 'emotion_tracker'
+
+    id = db.Column(db.Integer, primary_key=True)
+    happinessrank = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime)
+    comment = db.column(db.String(128))
+
+    def __repr__(self):
+        return '<EmoTrack happiness=' + self.happinessrank + ', timestamp=' + self.timestamp +\
+            ', comment=' + self.comment + '>'
+
+    def __init__(self, happinessRank, timestamp=datetime.now(), comment=None):
+        self.happinessrank = happinessRank
+        self.timestamp = timestamp
+        self.comment = comment
