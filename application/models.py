@@ -92,7 +92,7 @@ class BlogPost(db.Model):
         self.date_published = date_published
         self.content = content
 
-class EmoTrack(db.model):
+class EmoTrack(db.Model):
     """Table for storing historical log of emotions"""
     __tablename__ = 'emotion_tracker'
 
